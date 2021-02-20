@@ -5,6 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 
 /** Add your docs here. */
 public class OI {
@@ -12,10 +14,21 @@ public class OI {
     Constants constants;
 
     public Joystick driverJoy;
+    public JoystickButton intakeOpenButton;
+    public JoystickButton intakeCloseButton;
 
     public OI() {
         constants = new Constants();
         driverJoy = new Joystick(0);
+        intakeOpenButton = new JoystickButton(driverJoy, 0); // zmienić port!
+        intakeOpenButton = new JoystickButton(driverJoy, 0); // zmienić port!
+
+        intakeOpenButton.whenPressed();
+        intakeCloseButton.whenPressed();
+    }
+
+    private Command IntakeOpen() {
+        return null;
     }
 
     public Joystick getDriverJoy() {
