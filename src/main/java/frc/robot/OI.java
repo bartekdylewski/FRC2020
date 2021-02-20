@@ -5,8 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.IntakeClose;
+import frc.robot.commands.IntakeOpen;
 
 /** Add your docs here. */
 public class OI {
@@ -20,15 +21,11 @@ public class OI {
     public OI() {
         constants = new Constants();
         driverJoy = new Joystick(0);
-        intakeOpenButton = new JoystickButton(driverJoy, 0); // zmienić port!
-        intakeOpenButton = new JoystickButton(driverJoy, 0); // zmienić port!
+        intakeOpenButton = new JoystickButton(driverJoy, 0); // Guzik A
+        intakeOpenButton = new JoystickButton(driverJoy, 1); // Guzik B
 
-        intakeOpenButton.whenPressed();
-        intakeCloseButton.whenPressed();
-    }
-
-    private Command IntakeOpen() {
-        return null;
+        intakeOpenButton.whenPressed(new IntakeOpen());
+        intakeCloseButton.whenPressed(new IntakeClose());
     }
 
     public Joystick getDriverJoy() {

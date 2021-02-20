@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class Intake extends SubsystemBase {
@@ -18,22 +21,44 @@ public class Intake extends SubsystemBase {
   DoubleSolenoid intakeSolenoid;
   Joystick driverJoy;
   WPI_VictorSPX intakeMotor;
+  long delayToOffSolenoid;
 
 
   public Intake() {
     intakeSolenoid = new DoubleSolenoid(PortMap.kIntakeSolenoidA,PortMap.kIntakeSolenoidB);
-    driverJoy = new Joystick(0);
     intakeMotor = new WPI_VictorSPX(PortMap.kIntakeMotor);
+
+    delayToOffSolenoid = 1000;
 
     intakeSolenoid.set(Value.kOff);
   }
 
+  // Zamyka intake
   public void intakeClose() {
     intakeSolenoid.set(Value.kReverse);
+    
+    TimerTask task = new TimerTask() {
+      public void run() {
+        intakeSolenoid.set(Value.kOff);
+      }
+    };
+
+    Timer timer = new Timer();
+    timer.schedule(task, delayToOffSolenoid);
   }
 
+  // Otwiera Intake
   public void intakeOpen() {
     intakeSolenoid.set(Value.kForward);
+    
+    TimerTask task = new TimerTask() {
+      public void run() {
+        intakeSolenoid.set(Value.kOff);
+      }
+    };
+
+    Timer timer = new Timer();
+    timer.schedule(task, delayToOffSolenoid);
   }
 
   @Override
