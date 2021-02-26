@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -22,19 +23,37 @@ public class Intake extends SubsystemBase {
   Joystick driverJoy;
   WPI_VictorSPX intakeMotor;
   long delayToOffSolenoid;
+  Compressor compressor;
 
 
   public Intake() {
     intakeSolenoid = new DoubleSolenoid(PortMap.kIntakeSolenoidA,PortMap.kIntakeSolenoidB);
     intakeMotor = new WPI_VictorSPX(PortMap.kIntakeMotor);
+    compressor = new Compressor(0);
+    intakeMotor = new WPI_VictorSPX(PortMap.kIntakeMotor);
+    
 
     delayToOffSolenoid = 1000;
 
-    intakeSolenoid.set(Value.kOff);
+    intakeSolenoid.set(Value.kForward);
   }
 
-  // Zamyka intake
+  // Closes intake
   public void intakeClose() {
+    intakeSolenoid.set(Value.kForward);
+    
+    TimerTask task = new TimerTask() {
+      public void run() {
+        intakeSolenoid.set(Value.kOff);
+      }
+    };
+
+    Timer timer = new Timer();
+    timer.schedule(task, delayToOffSolenoid);
+  }
+
+  // Opens Intake
+  public void intakeOpen() {
     intakeSolenoid.set(Value.kReverse);
     
     TimerTask task = new TimerTask() {
@@ -47,18 +66,9 @@ public class Intake extends SubsystemBase {
     timer.schedule(task, delayToOffSolenoid);
   }
 
-  // Otwiera Intake
-  public void intakeOpen() {
-    intakeSolenoid.set(Value.kForward);
-    
-    TimerTask task = new TimerTask() {
-      public void run() {
-        intakeSolenoid.set(Value.kOff);
-      }
-    };
-
-    Timer timer = new Timer();
-    timer.schedule(task, delayToOffSolenoid);
+  // Rotates Intake
+  public void intakeRotate() {
+    // intakeMotor
   }
 
   @Override

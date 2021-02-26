@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj.SPI;
  */
 public class PortMap {
 
+    // Joystick
+    public static final int kJoystick = 0;
+
     // DriveTrain
     public static final int kLeftMasterDrive = 0;
     public static final int kRightMasterDrive = 1;
