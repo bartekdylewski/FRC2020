@@ -16,7 +16,7 @@ public class IntakeRotate extends CommandBase {
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
+// Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
@@ -28,7 +28,9 @@ public class IntakeRotate extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_intake.intakeStopMotor();
+  }
 
   // Returns true when the command should end.
   @Override

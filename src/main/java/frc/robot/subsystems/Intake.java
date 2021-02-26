@@ -24,6 +24,7 @@ public class Intake extends SubsystemBase {
   WPI_VictorSPX intakeMotor;
   long delayToOffSolenoid;
   Compressor compressor;
+  boolean isIntakeOpen;
 
 
   public Intake() {
@@ -36,10 +37,12 @@ public class Intake extends SubsystemBase {
     delayToOffSolenoid = 1000;
 
     intakeSolenoid.set(Value.kForward);
+    isIntakeOpen = false;
   }
 
   // Closes intake
   public void intakeClose() {
+    isIntakeOpen = false;
     intakeSolenoid.set(Value.kForward);
     
     TimerTask task = new TimerTask() {
@@ -64,11 +67,21 @@ public class Intake extends SubsystemBase {
 
     Timer timer = new Timer();
     timer.schedule(task, delayToOffSolenoid);
+    isIntakeOpen = true;
   }
 
   // Rotates Intake
   public void intakeRotate() {
-    // intakeMotor
+    if (isIntakeOpen) {
+      intakeMotor.set(0.35);
+    } else {
+      intakeMotor.set(0);
+    }
+  }
+
+  // Stops Motors
+  public void intakeStopMotor() {
+    intakeMotor.set(0);
   }
 
   @Override

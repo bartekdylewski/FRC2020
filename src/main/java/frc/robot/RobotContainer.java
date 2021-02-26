@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.commands.IntakeClose;
 import frc.robot.commands.IntakeOpen;
+import frc.robot.commands.IntakeRotate;
 import frc.robot.subsystems.Intake;
 
 /**
@@ -29,6 +30,7 @@ private final Intake m_intake = new Intake();
 
 private final IntakeClose m_intakeClose = new IntakeClose(m_intake);
 private final IntakeOpen m_intakeOpen = new IntakeOpen(m_intake);
+private final IntakeRotate m_intakeRotate = new IntakeRotate(m_intake);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -46,9 +48,11 @@ private final IntakeOpen m_intakeOpen = new IntakeOpen(m_intake);
     Joystick driverJoy = new Joystick(PortMap.kJoystick);
     JoystickButton intakeCloseButton = new JoystickButton(driverJoy, 1);
     JoystickButton intakeOpenButton = new JoystickButton(driverJoy, 2);
+    JoystickButton intakeRotateButton = new JoystickButton(driverJoy, 3);
 
     intakeCloseButton.whenPressed(new IntakeClose(m_intake));
     intakeOpenButton.whenPressed(new IntakeOpen(m_intake));
+    intakeRotateButton.whileHeld(new IntakeRotate(m_intake));
   }
 
   /**
