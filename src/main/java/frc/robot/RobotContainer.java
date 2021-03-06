@@ -13,7 +13,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.IntakeClose;
 import frc.robot.commands.IntakeOpen;
 import frc.robot.commands.IntakeRotate;
+import frc.robot.commands.ShooterRotate;
+import frc.robot.commands.ShooterStop;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,10 +30,13 @@ public class RobotContainer {
 
 //   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 private final Intake m_intake = new Intake();
+private final Shooter m_shooter = new Shooter();
 
 private final IntakeClose m_intakeClose = new IntakeClose(m_intake);
 private final IntakeOpen m_intakeOpen = new IntakeOpen(m_intake);
 private final IntakeRotate m_intakeRotate = new IntakeRotate(m_intake);
+private final ShooterRotate m_shooterRotate = new ShooterRotate(m_shooter);
+private final ShooterStop m_shooterStop = new ShooterStop(m_shooter);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -48,11 +54,15 @@ private final IntakeRotate m_intakeRotate = new IntakeRotate(m_intake);
     Joystick driverJoy = new Joystick(PortMap.kJoystick);
     JoystickButton intakeCloseButton = new JoystickButton(driverJoy, 1);
     JoystickButton intakeOpenButton = new JoystickButton(driverJoy, 2);
-    JoystickButton intakeRotateButton = new JoystickButton(driverJoy, 3);
+    JoystickButton intakeRotateButton = new JoystickButton(driverJoy, 6);
+    JoystickButton shooterRotateButton = new JoystickButton(driverJoy, 3);
+    JoystickButton shooterStopButton = new JoystickButton(driverJoy, 4);
 
     intakeCloseButton.whenPressed(new IntakeClose(m_intake));
     intakeOpenButton.whenPressed(new IntakeOpen(m_intake));
     intakeRotateButton.whileHeld(new IntakeRotate(m_intake));
+    shooterRotateButton.whenPressed(new ShooterRotate(m_shooter));
+    shooterStopButton.whenPressed(new ShooterStop(m_shooter));
   }
 
   /**
